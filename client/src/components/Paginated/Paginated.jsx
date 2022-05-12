@@ -1,4 +1,4 @@
-import './Paginated.css';
+import s from './Paginated.module.css';
 
 
 export default function Paginated ({recipesPerPage, allRecipes, paginated}){
@@ -9,16 +9,16 @@ export default function Paginated ({recipesPerPage, allRecipes, paginated}){
     }
 
     return(
-        <nav>
+        <div className={s.paginated}>
             <ul>
                 { pageNumber &&
                 pageNumber.map(number =>(
                     <li className='number' key={number}>
-                    <button onClick={()=> paginated(number)}>{number}</button>
+                    <button className={s.btnPag} onClick={()=> paginated(number)}>{number}</button>
                     </li>
                 ))}
             </ul>
-        </nav>
+        </div>
     )
 
 }

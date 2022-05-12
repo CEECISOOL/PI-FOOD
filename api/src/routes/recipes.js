@@ -17,7 +17,7 @@ const getApiInfo = async () => {
             healthScore: el.healthScore,
             summary: el.summary,
             analyzedInstructions: el.analyzedInstructions,
-            diets: el.diets? el.diets : 'diets not found',
+            diets: el.diets.length !==0 ? el.diets : [ 'Diets not found'] ,
         }
     });
     return apiInfo;
@@ -80,12 +80,12 @@ router.get('/:idB', async (req, res) => {
             id: apiInfoId,
             title: apiInfoTitle,
             image: apiInfoImage,
-            score: apiInfoScore,
+            spoonacularScore: apiInfoScore,
             healthScore: apiInfoHealthScore,
             summary: apiInfoSummary,
             analyzedInstructions: apiInfoInstructions,
-            diets: apiInfoDiets,
-            dishTypes: apiInfoDishTypes
+            diets: apiInfoDiets.length !==0? apiInfoDiets : ['Diets not found'],
+            dishTypes: apiInfoDishTypes.length !==0? apiInfoDishTypes : ['DishTypes not found']
         }
 
         allApiId ?
@@ -107,7 +107,7 @@ router.get('/:idB', async (req, res) => {
 });
 
 router.post('/', async (req, res) => {
-    const { title, summary, spoonacularScore, healthScore, analyzedInstructions, image, createdInDb, diets } = req.body
+    const { title, summary, spoonacularScore, healthScore, analyzedInstructions, image, createdInDb, dishTypes, diets } = req.body
 
     let recipeCreated = await Recipe.create({
         title,
@@ -116,12 +116,13 @@ router.post('/', async (req, res) => {
         healthScore,
         analyzedInstructions,
         image,
-        createdInDb
+        createdInDb,
+        dishTypes
     })
 
     let dietDb = await Diet.findAll({
         where: {
-            name: diets 
+            name: diets,
         }
     });
 

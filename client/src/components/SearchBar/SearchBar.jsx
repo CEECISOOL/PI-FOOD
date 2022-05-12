@@ -17,13 +17,14 @@ export default function SearchBar({setCurrentPage}){
         dispatch(getRecipesName(name));
         setName("")
         setCurrentPage(1);
-    }
+        } 
 
 
     return(
         <div>
             <input type="text" placeholder="Search..." onChange={(e) => handleInputChange(e)} value={name}/>
             <button type="submit" onClick={(e) => handleSubmit(e)}>Search</button>
+
         </div>
     )
 }

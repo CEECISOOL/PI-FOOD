@@ -16,11 +16,11 @@ export default function Home(){
 
     useEffect(()=>{
         dispatch(getRecipes());
-        dispatch((getDiets()))
+        dispatch(getDiets())
     }, [dispatch])
 
     const [currentPage, setCurrentPage] = useState(1)
-    const [recipesPerPage, setDogsPerPage] = useState(9)
+    const [recipesPerPage, setRecipesPerPage] = useState(9)
     const indexOfLastRecipe = currentPage * recipesPerPage
     const indexOfFirstRecipe= indexOfLastRecipe - recipesPerPage
     const currentRecipes = allRecipes.slice(indexOfFirstRecipe, indexOfLastRecipe)
@@ -35,6 +35,7 @@ export default function Home(){
     function handleClick(e){
         e.preventDefault();
         dispatch(getRecipes());   //CLICK Y ME SETEA, ME TRAE VUELVE A TRAER TODOS LOS PERSONAJES
+        setCurrentPage(1);
     }
 
     function handleFilterDiets(e) {
@@ -59,24 +60,39 @@ export default function Home(){
 
     return(
     
-            <div>
-            <Link to='/recipe'>Create Recipe</Link>
-            <h1>Titulo de la pag a modificar</h1>
-            <button onClick={e=> {handleClick(e)}}>
-                Reload all Recipes
-            </button>
-            <h1>Hello </h1>
-            <div>
-                <h1>Order</h1>
+            <div className={s.container}>
+                <div className={s.navBar}>
+                    <div className={s.recipeCreate}>
+                        <Link to='/recipe'>
+                            <button>Create Recipe</button>
+                        </Link>
+                    </div>
+                    <div>
+                        <h1>HENRY FOOD</h1>
+                    </div>
+                    <div>
+                        <SearchBar
+                           setCurrentPage={setCurrentPage}
+                        />
+                    </div>
+            </div>
+            <div className={s.filters}>
+                <div>
+                    <h4>Alphabetical order</h4>
                 <select onChange={e=> {handleSort(e)}}>
                     <option value='A-Z'>A-Z</option> {/*las options necesitan si o si un value. Dentro de select hay opciones, las opciones tienen un value: si el value='asc' hace algo, si el value='desc' hace esta otra cosa. Lo que me va permitir acceder que valor tiene cada una de esas opciones para que cuando desde el front yo hago click en esa opcion se haga toda la logica y la accion me entienda, yo necesito si o si pasarle un value*/}
                     <option value='Z-A'>Z-A</option>
                 </select>
+                </div>
+                <div>
+                    <h4>Order by score</h4>
                 <select onChange={e=> {handleOrderScore(e)}}>
-                    <option>Order by Score</option>
                     <option value="max_score">Max</option>
                     <option value="min_score">Min</option>
                 </select>
+                </div>
+                <div>
+                    <h4>Filter by type of diet</h4>
                 <select onChange={e => handleFilterDiets(e)}>
                     <option value="all">All diets</option>
                     <option value="gluten free">Gluten free</option>
@@ -89,14 +105,20 @@ export default function Home(){
                     <option value="fodmap friendly">Fodmap friendly</option>
                     <option value="whole 30">Whole30</option>
                 </select>
+                </div>
+                <div>
+                <button className={s.btn} onClick={e=> {handleClick(e)}}>
+                Reload all Recipes
+                </button>
             </div>
+            </div>
+            <div className={s.paginated}>
             <Paginated 
                 recipesPerPage={recipesPerPage}  
                 allRecipes={allRecipes.length-1}
                 paginated= {paginated}
             />
-            <SearchBar
-                setCurrentPage={setCurrentPage}/>
+            </div>
             <div className={s.cards}>
             {
                 currentRecipes?.map((el) =>{   
@@ -108,7 +130,7 @@ export default function Home(){
                 })
             }
             </div>
-        </div>
+            </div>
     )
 
 }

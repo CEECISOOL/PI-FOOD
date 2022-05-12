@@ -1,0 +1,51 @@
+
+.container{
+    background-image: url('../1.jpg');
+    background-size: cover;
+}
+
+.section{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+}
+.title{
+    background-color: gray;
+}
+.imagen{
+    width: 400px;
+    height: 300px;
+    justify-content: center;
+     margin-top: 10px;
+    border: 45px solid gray;
+}
+ul {
+    list-style-type: none;
+  }
+  
+
+.score{
+    background-color: gray;
+}
+.healthScore{
+    background-color: gray;
+}
+
+
+.diets{
+    background-color: gray;
+}
+
+.dishTypes{
+    background-color: gray;
+}
+.summary{
+    background-color: gray;
+}
+.instructions{
+    background-color: gray;
+}
+
+
+
+
+ 

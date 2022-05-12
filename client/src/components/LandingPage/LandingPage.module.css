@@ -1,9 +1,9 @@
-body{
-    /* background-image: url(../imegenes/8.jpg); */
+ /*body{
+     background-image: url(../imegenes/8.jpg); 
     background-repeat: no-repeat;
     background-color: #B3B3B3;
     background-size: cover;
-}
+} */
 
 .btnHome{
     margin-top: 300px;
@@ -19,6 +19,6 @@ body{
     background-color: white;
     border-radius: 5px;
     box-shadow: 0px 0px 40px grey;
-    height: 50px;
-    width: 200px;
+    height: 90px;
+    width: 250px;
 }
