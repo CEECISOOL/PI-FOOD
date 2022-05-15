@@ -1,6 +1,7 @@
 const { Router } = require('express');
 const axios = require('axios');
 const { Recipe, Diet } = require('../db');
+const e = require('express');
 const { API_KEY } = process.env
 
 const router = Router();
@@ -16,15 +17,21 @@ const getApiInfo = async () => {
             spoonacularScore: el.spoonacularScore,
             healthScore: el.healthScore,
             summary: el.summary,
-            analyzedInstructions: el.analyzedInstructions,
-            diets: el.diets.length !==0 ? el.diets : [ 'Diets not found'] ,
+            analyzedInstructions: el.analyzedInstructions?.map(e => e.steps.map(e => {
+                return {
+                    number: e.number,
+                    step: e.step
+                }
+            })),
+            diets: el.diets,
+            dishTypes: el.dishTypes
         }
     });
     return apiInfo;
 }
 
 const getDbInfo = async () => {
-    const dbInfo= Recipe.findAll({
+    const dbInfo = Recipe.findAll({
         include: {
             model: Diet,
             attributes: ['name'],
@@ -36,10 +43,10 @@ const getDbInfo = async () => {
     return dbInfo;
 }
 
-const getAllRecipes = async () =>{
+const getAllRecipes = async () => {
     const apiInfo = await getApiInfo(),
-    dbInfo = await getDbInfo(),
-    allInfo = apiInfo.concat(dbInfo);
+        dbInfo = await getDbInfo(),
+        allInfo = apiInfo.concat(dbInfo);
     return allInfo;
 }
 
@@ -61,8 +68,33 @@ router.get('/', async (req, res) => {
 });
 
 
+router.get('/:idR', async (req, res) => {
+    const { idR } = req.params;
+    const allInfo = await getAllRecipes();
+    try {
+        allInfo.forEach(el => {
+            if (el.id == Number(idR)) {
+                res.json({
+                    id: el.id,
+                    title: el.title,
+                    image: el.image,
+                    spoonacularScore: el.spoonacularScore,
+                    healthScore: el.healthScore,
+                    summary: el.summary,
+                    analyzedInstructions: el.analyzedInstructions,
+                    diets: el.diets,
+                    dishTypes: el.dishTypes
+                })
+            }
+        });
+    } catch(error){
+        console.log(error)
+    }
+})
 
-router.get('/:idB', async (req, res) => {
+
+
+/*router.get('/:idB', async (req, res) => {
     const { idB } = req.params
     try {
         const recipeId = await axios.get(`https://api.spoonacular.com/recipes/${idB}/information?apiKey=${API_KEY}`);          
@@ -73,7 +105,7 @@ router.get('/:idB', async (req, res) => {
         const apiInfoHealthScore = recipeId.data.healthScore
         const apiInfoSummary = recipeId.data.summary
         const apiInfoInstructions = recipeId.data.analyzedInstructions
-        const apiInfoDiets = recipeId.data.diets ? recipeId.data.diets : 'I sorry, diets not found'
+        const apiInfoDiets = recipeId.data.diets 
         const apiInfoDishTypes = recipeId.data.dishTypes
 
         const allApiId = {
@@ -84,8 +116,8 @@ router.get('/:idB', async (req, res) => {
             healthScore: apiInfoHealthScore,
             summary: apiInfoSummary,
             analyzedInstructions: apiInfoInstructions,
-            diets: apiInfoDiets.length !==0? apiInfoDiets : ['Diets not found'],
-            dishTypes: apiInfoDishTypes.length !==0? apiInfoDishTypes : ['DishTypes not found']
+            diets: apiInfoDiets,
+            dishTypes: apiInfoDishTypes
         }
 
         allApiId ?
@@ -104,10 +136,10 @@ router.get('/:idB', async (req, res) => {
             res.status(200).json(recipeId) :
             res.status(404).send('No existe receta con ese Id')
     }
-});
+});*/
 
 router.post('/', async (req, res) => {
-    const { title, summary, spoonacularScore, healthScore, analyzedInstructions, image, createdInDb, dishTypes, diets } = req.body
+    const { title, summary, spoonacularScore, healthScore, analyzedInstructions, image, createdInDb, diets } = req.body
 
     let recipeCreated = await Recipe.create({
         title,
@@ -117,7 +149,6 @@ router.post('/', async (req, res) => {
         analyzedInstructions,
         image,
         createdInDb,
-        dishTypes
     })
 
     let dietDb = await Diet.findAll({

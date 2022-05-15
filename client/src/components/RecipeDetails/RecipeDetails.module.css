@@ -1,48 +1,53 @@
-
-.container{
-    background-image: url('../1.jpg');
-    background-size: cover;
-}
-
 .section{
     display: grid;
     grid-template-columns: repeat(2, 1fr);
 }
 .title{
-    background-color: gray;
+    background-color: rgba(51,49,50,0.8);
+    color: white;
+   width: 750px;
+   margin-left: 20%;
+   border-radius: 20px;
 }
 .imagen{
     width: 400px;
     height: 300px;
     justify-content: center;
      margin-top: 10px;
-    border: 45px solid gray;
+    border: 45px solid rgba(51,49,50,0.8);
 }
-ul {
-    list-style-type: none;
-  }
-  
 
 .score{
-    background-color: gray;
+    background-color: rgba(51,49,50,0.8);
+    color: white;
 }
 .healthScore{
-    background-color: gray;
+    background-color: rgba(51,49,50,0.8);
+    color: white;
 }
 
 
 .diets{
-    background-color: gray;
+    background-color: rgba(51,49,50,0.8);
+    color: white;
 }
 
 .dishTypes{
-    background-color: gray;
+    background-color: rgba(51,49,50,0.8);
+    color: white;
+    list-style: none;
+    height: 100px;
+}
+.listDish{
+    padding-left: 200px;
 }
 .summary{
-    background-color: gray;
+    background-color: rgba(51,49,50,0.8);
+    color: white;
 }
 .instructions{
-    background-color: gray;
+    background-color: rgba(51,49,50,0.8);
+    color: white;
 }
 
 

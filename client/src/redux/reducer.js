@@ -55,7 +55,7 @@ function rootReducer(state= initialState, action){
                 recipes: arrNew
             };
         case 'ORDER_SCORE':
-            let orderScore = action.payload === 'max_score' ?
+            let orderScore = action.payload === 'min_score' ?
             state.recipes.sort(function (a, b) {
                 if (a.spoonacularScore > b.spoonacularScore) {
                     return 1;
@@ -88,7 +88,7 @@ function rootReducer(state= initialState, action){
             return{
                 ...state,
                 detail: action.payload
-            }
+            };
         case 'POST_RECIPE':
             return {
                 ...state,

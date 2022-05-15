@@ -21,6 +21,6 @@ button{
     background-color:lightgray;
 }
 
-.btnPag:focus{
+.btnPag:active{
   background-color: brown;
 }

@@ -72,7 +72,7 @@ export default function RecipeCreate() {
     function validate(input) {
         const imgValidate = /(https?:\/\/.*\.(?:png|jpg))/
         let errors = {}
-        if (!input.title) {
+        if (input.title === " ") {
             errors.title = 'Name is required'
         }
         else if (!input.summary) {
@@ -139,7 +139,7 @@ export default function RecipeCreate() {
                     </div>
                     <div>
                         <h4>Image: </h4>
-                        <input required type="text" value={input.image} name="image" onChange={(e) => handleChange(e)} />
+                        <input  type="text" value={input.image} name="image" onChange={(e) => handleChange(e)} />
                         {errors.image && (<p>{errors.image}</p>)}
                     </div>  
                     <div>
@@ -171,7 +171,7 @@ export default function RecipeCreate() {
                         </div>
                     </div>
                     <div className={s.btnS}>
-                <button onClick={handleSubmit}>Create Recipe</button>
+                <button >Create Recipe</button>
             </div>
                 </form>
             </div>
