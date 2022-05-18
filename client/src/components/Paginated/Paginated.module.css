@@ -15,12 +15,20 @@ button{
   cursor: pointer;
 
 }
-
-.btnPag:hover {
-    color:black;
-    background-color:lightgray;
+.btnPag{
+  background-color: rgba(51,49,50,0.8);
+  color: white;
+  border-radius: 7px;
+  width: 40px;
+  height: 30px;
 }
 
-.btnPag:active{
-  background-color: brown;
+.btnPag:hover {
+   background: black;
+}
+
+.btnPag:focus{
+  
+    background-color:rgb(247, 66, 102);
+    color: white;
 }

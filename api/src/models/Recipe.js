@@ -25,7 +25,7 @@ module.exports = (sequelize) => {
       type: DataTypes.INTEGER
     },
     analyzedInstructions: {
-      type: DataTypes.TEXT
+      type: DataTypes.STRING
     },
     image: {
       type: DataTypes.TEXT,

@@ -1,14 +1,15 @@
 import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import { useDispatch} from 'react-redux';
-import { getDiets, postRecipe } from '../../redux/actions';
+import { Link, useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { getDiets, getRecipes, postRecipe } from '../../redux/actions';
 import s from './RecipeCreate.module.css';
 
 
 export default function RecipeCreate() {
-    const dispatch = useDispatch(),
-        [errors, setErrors] = useState({})
-
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+    const [errors, setErrors] = useState({});
+    const [button, setButton] = useState(true)
     const [input, setInput] = useState({  //input es mi estado local
         title: "",
         summary: "",
@@ -23,6 +24,10 @@ export default function RecipeCreate() {
         dispatch(getDiets())
     }, [dispatch])
 
+    useEffect(() => {
+        if (input.title.length > 0) setButton(false)
+        else setButton(true)
+    }, [input, setButton])
 
     function handleChange(e) {
         setInput({    //a mi estado input 
@@ -47,36 +52,12 @@ export default function RecipeCreate() {
 
     }
 
-
-
-    function handleSubmit(e) {
-     
-        if (errors.title || errors.summary || errors.spoonacularScore) {
-            alert("Debe ingresar el titulo y el resumen como minimo")
-        } else {
-            e.preventDefault();
-            dispatch(postRecipe(input))
-            alert('Recipe Created')
-            setInput({
-                title: "",
-                summary: "",
-                spoonacularScore: "",
-                healthScore: "",
-                analyzedInstructions: "",
-                image: "",
-                diets: []
-            })
-        }
-    }
-
     function validate(input) {
-        const imgValidate = /(https?:\/\/.*\.(?:png|jpg))/
+        const imgValidate = /(https?:\/\/.*\.(?:png|jpg))/;
         let errors = {}
-        if (input.title === " ") {
+
+        if (!input.title) {
             errors.title = 'Name is required'
-        }
-        else if (!input.summary) {
-            errors.summary = 'Summary is required'
         }
         else if (!input.spoonacularScore) {
             errors.spoonacularScore = 'Score is required'
@@ -96,63 +77,88 @@ export default function RecipeCreate() {
         else if (input.healthScore < 1) {
             errors.healthScore = 'Health Score min is 1'
         }
+        else if (!input.image || !imgValidate.test(input.image)) {
+            errors.image = 'Please insert an image type URL'
+        }
         else if (!input.analyzedInstructions) {
             errors.analyzedInstructions = 'Analyzed Instructions is required!';
         }
-        else if (!input.image || !imgValidate.test(input.image)) {
-            errors.image = 'Please insert an image type URL'
+        else if (!input.summary) {
+            errors.summary = 'Summary is required'
         }
         return errors;
     }
 
+    function handleSubmit(e) {
+        if (errors.title || errors.summary || errors.spoonacularScore || errors.healthScore || errors.analyzedInstructions || errors.image) {
+            e.preventDefault();
+            alert("Debe ingresar el titulo y el resumen como minimo")
+        } else {
+            e.preventDefault();
+            dispatch(postRecipe(input))
+            dispatch(getRecipes())
+            alert('Recipe Created')
+            setInput({
+                title: "",
+                summary: "",
+                spoonacularScore: "",
+                healthScore: "",
+                analyzedInstructions: "",
+                image: "",
+                diets: []
+            })
+            navigate("/home");
+
+        }
+    }
 
 
     return (
         <div>
-            <div>
+            <div className={s.btnContainerC}>
                 <Link to='/home'>
-                    <button>Volver al home</button>
+                    <button className={s.btnHomeC}>⬅ TO BACK HOME</button>
                 </Link>
             </div>
             <div className={s.titleForm}>
                 <h1>Crea tu receta</h1>
             </div>
             <div className={s.container}>
-                
-                <form  onSubmit={(e) => handleSubmit(e)}>
-                    <div className={s.form}>
-                    <div >
-                        <h4>Nombre: </h4>
-                        <input type="text" value={input.title} name="title" onChange={(e) => handleChange(e)} />
-                        {errors.title && (<p>{errors.title}</p>)}
-                    </div>
-                  
-                    <div>
-                        <h4>Score: </h4>
-                        <input type="number" value={input.spoonacularScore} name="spoonacularScore" placeholder=" " onChange={(e) => handleChange(e)} />
-                        {errors.spoonacularScore && (<p>{errors.spoonacularScore}</p>)}
-                    </div>
-                    <div>
-                        <h4>Health Score: </h4>
-                        <input type="number" value={input.healthScore} name="healthScore" placeholder=" " onChange={(e) => handleChange(e)} />
-                        {errors.healthScore && (<p>{errors.healthScore}</p>)}
-                    </div>
-                    <div>
-                        <h4>Image: </h4>
-                        <input  type="text" value={input.image} name="image" onChange={(e) => handleChange(e)} />
-                        {errors.image && (<p>{errors.image}</p>)}
-                    </div>  
-                    <div>
-                        <h4> Analyzed Instructions: </h4>
-                        <textarea type="textera" value={input.analyzedInstructions} name="analyzedInstructions" placeholder=" " rows="5" cols="40" onChange={(e) => handleChange(e)} />
-                        {errors.analyzedInstructions && (<p>{errors.analyzedInstructions}</p>)}
-                    </div>
-                    <div>
-                        <h4>Summary: </h4>
-                        <textarea type="text" value={input.summary} name="summary" placeholder=" " rows="5" cols="40" onChange={(e) => handleChange(e)} />
-                        {errors.summary && (<p>{errors.summary}</p>)}
 
-                    </div>
+                <form onSubmit={(e) => handleSubmit(e)}>
+                    <div className={s.form}>
+                        <div >
+                            <h4>Nombre: </h4>
+                            <input type="text" value={input.title} name="title" onChange={(e) => handleChange(e)} />
+                            {errors.title && (<p>{errors.title}</p>)}
+                        </div>
+
+                        <div>
+                            <h4>Score: </h4>
+                            <input type="number" value={input.spoonacularScore} name="spoonacularScore" placeholder=" " onChange={(e) => handleChange(e)} />
+                            {errors.spoonacularScore && (<p>{errors.spoonacularScore}</p>)}
+                        </div>
+                        <div>
+                            <h4>Health Score: </h4>
+                            <input type="number" value={input.healthScore} name="healthScore" placeholder=" " onChange={(e) => handleChange(e)} />
+                            {errors.healthScore && (<p>{errors.healthScore}</p>)}
+                        </div>
+                        <div>
+                            <h4>Image: </h4>
+                            <input type="text" value={input.image} name="image" onChange={(e) => handleChange(e)} />
+                            {errors.image && (<p>{errors.image}</p>)}
+                        </div>
+                        <div>
+                            <h4> Analyzed Instructions: </h4>
+                            <textarea type="textera" value={input.analyzedInstructions} name="analyzedInstructions" placeholder=" " rows="5" cols="40" onChange={(e) => handleChange(e)} />
+                            {errors.analyzedInstructions && (<p>{errors.analyzedInstructions}</p>)}
+                        </div>
+                        <div>
+                            <h4>Summary: </h4>
+                            <textarea type="text" value={input.summary} name="summary" placeholder=" " rows="5" cols="40" onChange={(e) => handleChange(e)} />
+                            {errors.summary && (<p>{errors.summary}</p>)}
+
+                        </div>
                     </div>
                     <div className={s.check}>
                         <h4>Diets: </h4>
@@ -170,12 +176,12 @@ export default function RecipeCreate() {
 
                         </div>
                     </div>
-                    <div className={s.btnS}>
-                <button >Create Recipe</button>
-            </div>
+                    <div className={s.btnContainerCreate}>
+                        <button  className={s.btnHomeCreate} disabled={button} >CREATE RECIPE</button>
+                    </div>
                 </form>
             </div>
-            
+
         </div>
     )
 }

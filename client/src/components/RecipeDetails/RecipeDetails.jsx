@@ -1,8 +1,9 @@
 import React, { useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { getDetails, getRecipes } from "../../redux/actions"
+import { getDetails, cleanData } from "../../redux/actions"
 import s from './RecipeDetails.module.css';
+import Loading from "../Loading/Loading";
 
 
 export default function RecipeDetails() {
@@ -10,10 +11,12 @@ export default function RecipeDetails() {
     const { id } = useParams()
 
 
-
     useEffect(() => {
         dispatch(getDetails(id))
-    }, [dispatch])
+        dispatch(cleanData())
+
+    }, [dispatch, id])
+
 
 
     let myRecipe = useSelector(state => state.detail)
@@ -29,11 +32,9 @@ export default function RecipeDetails() {
             {Object.keys(myRecipe).length !== 0 ?
 
                 <div className={s.container}>
-                    <div>
+                    <div className={s.btnContainer}>
                         <Link to="/home">
-                            <button>
-                                Volver
-                            </button>
+                            <button className={s.btnHome}>⬅ TO BACK HOME</button>
                         </Link>
                     </div>
                     <div className={s.title}>
@@ -41,9 +42,9 @@ export default function RecipeDetails() {
                     </div>
                     <div className={s.section}>
                         <div className={s.imgCont} >
-                            <img className={s.imagen} src={myRecipe.image} alt="img not found" />
+                            <img className={s.imagen} src={myRecipe.image} alt="img not found" />:
                         </div>
-                        <div>
+                        <div className={s.sectionTwo}>
                             <div className={s.score}>
                                 <h3>Score: {myRecipe.spoonacularScore}</h3>
                             </div>
@@ -52,31 +53,33 @@ export default function RecipeDetails() {
                             </div>
                             <div className={s.diets}>
                                 <h3>Diets: </h3>
-                                <div className={s.listdiets}>
-                                <h3>{myRecipe.diets.length > 0 ? (myRecipe.diets.map(e => e.name ? e.name : e)) : ['diets not found']}</h3>
-                            </div></div>
+                                <h3>{myRecipe.diets.length > 0 ? (myRecipe.diets.map(e => e.name ? e.name : e + '/ ')) : ['diets not found']}</h3>
+                            </div>
                             <div className={s.dishTypes}>
-                                <h3 >Dish types:</h3>                               
+                                <h3>Dish types:</h3>
                                 <div className={s.listDish}>
-                                <p>{myRecipe.dishTypes ? myRecipe.dishTypes.map(e=> <li>{e} ✔ </li>): 'dishTypes not found'}</p>
-
+                                    <h4>{myRecipe.dishTypes ? myRecipe.dishTypes.map(e => e + '/ ') : 'dishTypes not found'}</h4>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div className={s.summary}>
-                        <h2>Summary: </h2>
-                        <h3 dangerouslySetInnerHTML={createSummary()}></h3>
+                        <div className={s.sangria}>
+                            <h3>Summary: </h3>
+                            <h3 dangerouslySetInnerHTML={createSummary()}></h3>
+                        </div>
                     </div>
                     <div className={s.instructions}>
-                        <h3>Instructions:</h3>
-                        <h3>{myRecipe.analyzedInstructions.length? myRecipe.analyzedInstructions.map(e=>
-                        e.map(e=>
-                            e.number && e.step?'paso ' + e.number + ': ' + e.step : 'not'
-                        )): 'not'}</h3>
+                        <div className={s.sangriaTwo}>
+                            <h3>Instructions:</h3>
+                            <h3>{myRecipe.analyzedInstructions ? (typeof myRecipe.analyzedInstructions === 'string' ? myRecipe.analyzedInstructions : myRecipe.analyzedInstructions.map(e =>
+                                e.map(e =>
+                                    e.number && e.step ? 'paso ' + e.number + ': ' + e.step : myRecipe.analyzedInstructions
+                                ))) : 'not'}</h3>
+                        </div>
                     </div>
 
-                </div> : "Loading..."
+                </div> : <Loading />
             }
 
         </div>

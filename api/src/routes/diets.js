@@ -8,7 +8,7 @@ const router = Router();
 
 router.get("/", async (req, res) => {
     let dietArr= []
-const dietsApi = await axios.get(`https://api.spoonacular.com/recipes/complexSearch?number=100&addRecipeInformation=true&diet&apiKey=${API_KEY}`);
+const dietsApi = await axios.get(`https://api.spoonacular.com/recipes/complexSearch?number=5222&addRecipeInformation=true&diet&apiKey=${API_KEY}`);
     dietsApi.data.results.map(e => {
         e.diets.forEach(el =>{
             if(!dietArr.includes(el)){
@@ -17,14 +17,7 @@ const dietsApi = await axios.get(`https://api.spoonacular.com/recipes/complexSea
         })
     });
 
-    dietArr.forEach((e) =>{
-        Diet.findOrCreate({
-          where: {name: e },
-        });
-      });
-
-      const dietsDB = await Diet.findAll();
-      return res.send(dietsDB);
+    res.send(dietArr);
 })
 
 module.exports = router;

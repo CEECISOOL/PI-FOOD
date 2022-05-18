@@ -6,12 +6,13 @@ import { getRecipes, getDiets, filterDiets, alphebeticalOrder, orderScore } from
 import Cards from '../Cards/Cards';
 import Paginated from '../Paginated/Paginated';
 import SearchBar from '../SearchBar/SearchBar';
-//import Loading from "./Loading/Loading";
+import Loading from "../Loading/Loading";
 
 
 export default function Home() {
     const dispatch = useDispatch(),
-        allRecipes = useSelector((state) => state.recipes)
+        recipes = useSelector((state) => state.recipes),
+        allDiets = useSelector((state) => state.diets)
 
     useEffect(() => {
         dispatch(getRecipes());
@@ -22,7 +23,7 @@ export default function Home() {
     const [recipesPerPage, setRecipesPerPage] = useState(9)
     const indexOfLastRecipe = currentPage * recipesPerPage
     const indexOfFirstRecipe = indexOfLastRecipe - recipesPerPage
-    const currentRecipes = allRecipes.slice(indexOfFirstRecipe, indexOfLastRecipe)
+    const currentRecipes = recipes.slice(indexOfFirstRecipe, indexOfLastRecipe)
     const [orden, setOrden] = useState("")
 
 
@@ -32,8 +33,8 @@ export default function Home() {
 
 
     function handleClick(e) {
-    e.preventDefault();
-       dispatch(getRecipes());   //CLICK Y ME SETEA, ME TRAE VUELVE A TRAER TODOS LOS PERSONAJES
+        e.preventDefault();
+        dispatch(getRecipes());   //CLICK Y ME SETEA, ME TRAE VUELVE A TRAER TODOS LOS PERSONAJES
         setCurrentPage(1);
         //window.location.reload()
     }
@@ -59,79 +60,88 @@ export default function Home() {
 
 
     return (
+        <div>
+            {Object.keys(currentRecipes).length !== 0 ?
 
-        <div className={s.container}>
-            <div className={s.navBar}>
-                <div className={s.recipeCreate}>
-                    <Link to='/recipe'>
-                        <button>Create Recipe</button>
-                    </Link>
-                </div>
-                <div>
-                    <h1>HENRY FOOD</h1>
-                </div>
-                <div>
-                    <SearchBar
-                        setCurrentPage={setCurrentPage}
-                    />
-                </div>
-            </div>
-            <div className={s.filters}>
-                <div>
-                    <h4>Alphabetical order</h4>
-                    <select onChange={e => { handleSort(e) }}>
-                        <option value="default" hidden> select option </option>
-                        <option value='A-Z'>A-Z</option> {/*las options necesitan si o si un value. Dentro de select hay opciones, las opciones tienen un value: si el value='asc' hace algo, si el value='desc' hace esta otra cosa. Lo que me va permitir acceder que valor tiene cada una de esas opciones para que cuando desde el front yo hago click en esa opcion se haga toda la logica y la accion me entienda, yo necesito si o si pasarle un value*/}
-                        <option value='Z-A'>Z-A</option>
-                    </select>
-                </div>
-                <div>
-                    <h4>Order by score</h4>
-                    <select onChange={e => { handleOrderScore(e) }}>
-                        <option value="default" hidden> select option </option>
-                        <option value="max_score">Max</option>
-                        <option value="min_score">Min</option>
-                    </select>
-                </div>
-                <div>
-                    <h4>Filter by type of diet</h4>
-                    <select onChange={e => handleFilterDiets(e)}>
-                        <option value="all">All diets</option>
-                        <option value="gluten free">Gluten free</option>
-                        <option value="dairy free">Dairy free</option>
-                        <option value="lacto ovo vegetarian">Lacto Ovo Vegetarian</option>
-                        <option value="vegan">Vegan</option>
-                        <option value="paleolithic">Paleolithic</option>
-                        <option value="primal">Primal</option>
-                        <option value="pescatarian">Pescatarian</option>
-                        <option value="fodmap friendly">Fodmap friendly</option>
-                        <option value="whole 30">Whole30</option>
-                    </select>
-                </div>
-                <div>
-                    <button className={s.btn} onClick={e => { handleClick(e) }}>
-                        Reload all Recipes
-                    </button>
-                </div>
-            </div>
-            <div className={s.paginated}>
-                <Paginated
-                    recipesPerPage={recipesPerPage}
-                    allRecipes={allRecipes.length - 1}
-                    paginated={paginated}
-                />
-            </div>
-            <div className={s.cards}>
-                {
-                    currentRecipes?.map((el) => {
-                        return (
-                            <div>
-                                <Cards id={el.id} image={el.image} title={el.title} diets={el.diets.length > 0 ? (el.diets.map(e => e.name ? e.name : e)) : ['diets not found']} />
-                            </div>
-                        );
-                    })
-                }
-            </div>
+
+                <div className={s.container}>
+                    <div className={s.navBar}>
+                        <div >
+                            <Link to='/recipe'>
+                                <button className={s.btnCreate}>Create Recipe</button>
+                            </Link>
+                        </div>
+                        <div>
+                            <h1>HENRY FOOD</h1>
+                        </div>
+                        <div>
+                            <SearchBar
+                                setCurrentPage={setCurrentPage}
+                            />
+                        </div>
+                    </div>
+                    <div className={s.filters}>
+                        <div>
+                            <h4>Alphabetical order</h4>
+                            <select onChange={e => { handleSort(e) }}>
+                                <option value="default" hidden> select option </option>
+                                <option value='A-Z'>A-Z</option> {/*las options necesitan si o si un value. Dentro de select hay opciones, las opciones tienen un value: si el value='asc' hace algo, si el value='desc' hace esta otra cosa. Lo que me va permitir acceder que valor tiene cada una de esas opciones para que cuando desde el front yo hago click en esa opcion se haga toda la logica y la accion me entienda, yo necesito si o si pasarle un value*/}
+                                <option value='Z-A'>Z-A</option>
+                            </select>
+                        </div>
+                        <div>
+                            <h4>Order by score</h4>
+                            <select onChange={e => { handleOrderScore(e) }}>
+                                <option value="default" disabled selected hidden> select option </option>
+                                <option value="max_score">Max</option>
+                                <option value="min_score">Min</option>
+                            </select>
+                        </div>
+                        <div>
+                            <h4>Filter by type of diet</h4>
+                            <select onChange={e => handleFilterDiets(e)}>
+                                <option value="all">All diets</option>
+                                {allDiets.map(e => (
+                                    <option value={e}>{e}</option>
+                                ))}
+                            </select>
+                        </div>
+                        <div className={s.contBtn}>
+                            <button className={s.btnReload} onClick={e => { handleClick(e) }}>
+                                Reload all Recipes
+                            </button>
+                        </div>
+                    </div>
+                    <div className={s.paginated}>
+                        <Paginated
+                            recipesPerPage={recipesPerPage}
+                            recipes={recipes.length - 1}
+                            paginated={paginated}
+                        />
+                    </div>
+                    
+                    {Array.isArray(recipes) ? (
+                        <div className={s.cards}>
+                            {
+                                currentRecipes?.map((el) => {
+                                    return (
+                                        <div>
+                                            <Cards id={el.id} image={el.image} title={el.title} diets={el.diets.length > 0 ? (el.diets.map(e => e.name ? e.name : e)) : ['diets not found']} error={el.error} />
+                                        </div>
+                                    );
+                                })
+                            }
+                        </div>
+                    ) : <p>'nal'</p>}
+                    <div className={s.paginated}>
+                        <Paginated
+                            recipesPerPage={recipesPerPage}
+                            recipes={recipes.length - 1}
+                            paginated={paginated}
+                        />
+                    </div>
+                </div> : <Loading />
+            }
         </div>
     )
 

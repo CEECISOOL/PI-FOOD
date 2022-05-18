@@ -1,11 +1,11 @@
 import s from './Paginated.module.css';
 
 
-export default function Paginated ({recipesPerPage, allRecipes, paginated}){
+export default function Paginated ({recipesPerPage, recipes, paginated}){
     const pageNumber = []
 
-    for (let i= 0; i<=Math.ceil(allRecipes/recipesPerPage)+1; i++){
-        pageNumber.push(i)
+    for (let i= 0; i<=Math.ceil(recipes/recipesPerPage); i++){
+        pageNumber.push(i+1)
     }
 
     return(

@@ -1,7 +1,6 @@
 const { Router } = require('express');
 const axios = require('axios');
 const { Recipe, Diet } = require('../db');
-const e = require('express');
 const { API_KEY } = process.env
 
 const router = Router();
@@ -60,7 +59,7 @@ router.get('/', async (req, res) => {
 
         recipeNames.length ?
             res.status(200).send(recipeNames) :
-            res.status(404).send('Recipes not found')
+            res.status(404).json({ "error":"Recipes not found"})
     }
     else {
         res.status(200).send(allRecipes)
@@ -72,9 +71,9 @@ router.get('/:idR', async (req, res) => {
     const { idR } = req.params;
     const allInfo = await getAllRecipes();
     try {
-        allInfo.forEach(el => {
-            if (el.id == Number(idR)) {
-                res.json({
+         allInfo.forEach(el => {
+            if (el.id == idR) {
+               res.json({
                     id: el.id,
                     title: el.title,
                     image: el.image,
@@ -86,9 +85,9 @@ router.get('/:idR', async (req, res) => {
                     dishTypes: el.dishTypes
                 })
             }
-        });
+        })
     } catch(error){
-        console.log(error)
+       console.log(error)
     }
 })
 

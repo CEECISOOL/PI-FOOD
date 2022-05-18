@@ -1,14 +1,12 @@
 import React from "react";
-import s from "../styles/loading.module.css"
+import s from "./Loading.module.css"
 
 export default function Loading() {
     return (
-        <div className={s.loadingio_spinner_double_ring_20o5ak60pt8}><div className={s.ldio_2nmyj1umjwv}>
-            <div></div>
-            <div></div>
-            <div><div></div></div>
-            <div><div></div></div>
-        </div></div>
-
+        <div className={s.container}>
+        <div class={s.loadingio_spinner_spinner_407vn9fqvic}><div class={s.ldio_p4u3wgqmuk}>
+<div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div>
+</div></div>
+</div>
     )
 }

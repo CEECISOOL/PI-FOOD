@@ -68,3 +68,15 @@ export function postRecipe(payload){
     return response
     } 
 }
+
+export function cleanData () {
+    return async function(dispatch){
+
+    
+    let clean = {};
+     return dispatch({
+        type: "CLEAN_DATA",
+        payload: clean
+    })
+}
+}

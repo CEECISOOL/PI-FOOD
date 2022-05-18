@@ -1,3 +1,18 @@
+.btnContainerC{
+    margin-top: 20px;
+}
+.btnHomeC{
+    background: rgb(247, 66, 102);
+    color: white;
+    height: 40px;
+    width: 160px;
+    border-color: rgb(247, 66, 102);
+    border-radius: 10px;
+}
+.btnHomeC:hover{
+    background: rgb(138, 95, 104);
+    border-color: rgb(138, 95, 104);
+}
 .titleForm{
     background-color: rgba(51,49,50,0.8);
     color: white;
@@ -10,7 +25,7 @@
 .container{
     border-radius: 30px;
     background-color:  rgba(51,49,50,0.8); 
-    height: 900px;
+    height: 920px;
     margin-top: 30px;
     margin-left: auto;
     margin-right: auto;
@@ -42,4 +57,19 @@
     border-radius: 5px;
     width: 200px;
 }
-
+.btnContainerCreate{
+    margin-top: 40px;
+    margin-bottom: 70px;
+}
+.btnHomeCreate{
+    background: rgb(247, 66, 102);
+    color: white;
+    height: 40px;
+    width: 160px;
+    border-color: rgb(247, 66, 102);
+    border-radius: 10px;
+}
+.btnHomeCreate:hover{
+    background: rgb(138, 95, 104);
+    border-color: rgb(138, 95, 104);
+}
