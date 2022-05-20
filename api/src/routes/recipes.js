@@ -58,8 +58,8 @@ router.get('/', async (req, res) => {
         let recipeNames = allRecipes.filter(e => e.title.toLowerCase().includes(name.toLowerCase()));
 
         recipeNames.length ?
-            res.status(200).send(recipeNames) :
-            res.status(404).json({ "error":"Recipes not found"})
+            res.send(recipeNames) :
+            res.send("Recipes not found")
     }
     else {
         res.status(200).send(allRecipes)

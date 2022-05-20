@@ -23,7 +23,9 @@ export default function Home() {
     const [recipesPerPage, setRecipesPerPage] = useState(9)
     const indexOfLastRecipe = currentPage * recipesPerPage
     const indexOfFirstRecipe = indexOfLastRecipe - recipesPerPage
-    const currentRecipes = recipes.slice(indexOfFirstRecipe, indexOfLastRecipe)
+    const currentRecipes = Array.isArray(recipes)
+    ? recipes.slice(indexOfFirstRecipe, indexOfLastRecipe)
+    : recipes
     const [orden, setOrden] = useState("")
 
 
@@ -33,7 +35,6 @@ export default function Home() {
 
 
     function handleClick(e) {
-        e.preventDefault();
         dispatch(getRecipes());   //CLICK Y ME SETEA, ME TRAE VUELVE A TRAER TODOS LOS PERSONAJES
         setCurrentPage(1);
         //window.location.reload()
@@ -136,7 +137,7 @@ export default function Home() {
                     <div className={s.paginated}>
                         <Paginated
                             recipesPerPage={recipesPerPage}
-                            recipes={recipes.length - 1}
+                            recipes={recipes.length-1}
                             paginated={paginated}
                         />
                     </div>
