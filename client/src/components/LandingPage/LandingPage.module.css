@@ -1,11 +1,4 @@
- /*body{
-     background-image: url(../imegenes/8.jpg); 
-    background-repeat: no-repeat;
-    background-color: #B3B3B3;
-    background-size: cover;
-} */
-
-.btnHome{
+.btnHome {
     margin-top: 300px;
     color: white;
     background-color: black;
@@ -14,9 +7,9 @@
     width: 250px;
 }
 
-.btnHome:hover{
+.btnHome:hover {
     color: rgb(247, 66, 102);
-    background-color: rgba(51,49,50,0.8);
+    background-color: rgba(51, 49, 50, 0.8);
     border-radius: 5px;
     box-shadow: 0px 0px 40px #f74266;
     height: 90px;

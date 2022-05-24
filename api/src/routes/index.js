@@ -1,14 +1,12 @@
 const { Router } = require('express');
-// Importar todos los routers;
 const recipes = require('./recipes');
 const diets = require('./diets');
-
-
+const recipe = require('./recipe');
 const router = Router();
 
-// Configurar los routers
+
 router.use('/recipes', recipes);
 router.use('/types', diets);
-
+router.use('/recipe', recipe);
 
 module.exports = router;

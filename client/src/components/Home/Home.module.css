@@ -1,3 +1,80 @@
+.navBar {
+    margin: 20px 50px;
+    border-radius: 25px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    background-color: burlywood;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(51, 49, 50, 0.8);
+    color: white;
+}
+
+.btnCreate {
+    background: rgb(247, 66, 102);
+    color: white;
+    height: 28px;
+    width: 150px;
+    border-color: rgb(247, 66, 102);
+    border-radius: 10px;
+}
+
+.btnCreate:hover {
+    background: rgb(138, 95, 104);
+    border-color: rgb(138, 95, 104);
+}
+
+.filters {
+    padding-bottom: 20px;
+    height: 100px;
+    margin: 10px 50px;
+    border-radius: 25px;
+    display: grid;
+    grid-template-columns: repeat(4, 0.2fr);
+    background-color: rgba(51, 49, 50, 0.8);
+    justify-content: center;
+    align-items: center;
+}
+
+.filters h4 {
+    font-size: 15px;
+    color: white;
+}
+
+select {
+    width: 200px;
+    border-radius: 25px;
+    text-align: center;
+}
+
+select:hover {
+    background-color: rgba(51, 49, 50, 0.8);
+    color: white;
+}
+
+option {
+    background-color: white;
+    color: black;
+}
+
+.contBtn {
+    padding-top: 10px;
+}
+
+.btnReload {
+    background: rgb(247, 66, 102);
+    color: white;
+    height: 28px;
+    width: 150px;
+    border-color: rgb(247, 66, 102);
+    border-radius: 10px;
+}
+
+.btnReload:hover {
+    background: rgb(138, 95, 104);
+    border-color: rgb(138, 95, 104);
+}
+
 .cards {
     padding-top: 30px;
     border-radius: 50px;
@@ -5,79 +82,7 @@
     grid-template-columns: repeat(3, 1fr);
     grid-auto-rows: minmax(50px, auto);
 }
-.navBar{
-    margin: 20px 50px; 
-    border-radius: 25px;
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    background-color: burlywood;
-    justify-content: center;
-    align-items: center;
-    background-color: rgba(51,49,50,0.8);
-    color: white;
-}
-.btnCreate{
-    background: rgb(247, 66, 102);
-    color: white;
-    height: 28px;
-    width: 150px;
-    border-color: rgb(247, 66, 102);
-    border-radius: 10px;
-}
-.btnCreate:hover{
-    background: rgb(138, 95, 104);
-    border-color: rgb(138, 95, 104);
 
+.error {
+    color: white
 }
-
-.contBtn{
-    padding-top: 10px;
-
-}
-
-.btnReload{
-    background: rgb(247, 66, 102);
-    color: white;
-    height: 28px;
-    width: 150px;
-    border-color: rgb(247, 66, 102);
-    border-radius: 10px;
-}
-.btnReload:hover{
-    background: rgb(138, 95, 104);
-    border-color: rgb(138, 95, 104);
-}
-.filters{
-    padding-bottom: 20px;
-    height: 100px;
-    margin: 10px 50px; 
-    border-radius: 25px;
-    display: grid;
-    grid-template-columns: repeat(4, 0.2fr);
-    background-color: rgba(51,49,50,0.8);
-    justify-content: center;
-    align-items: center;
-}
-.filters h4{
-    font-size: 15px;
-    color: white;
-}
-select{
-    width: 200px;
-    border-radius: 25px;
-    text-align: center;
-}
-select:hover{
-    background-color: rgba(51,49,50,0.8);
-    color: white;
-}
-
-option{
-    background-color: white;
-    color: black;
-}
-
-select option:hover{
-    background-color: pink;
-}
-

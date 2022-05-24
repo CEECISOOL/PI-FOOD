@@ -1,16 +1,16 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { getDiets, getRecipes, postRecipe } from '../../redux/actions';
 import s from './RecipeCreate.module.css';
 
-
 export default function RecipeCreate() {
     const dispatch = useDispatch();
+    const diets = useSelector((state) => state.diets);
     const navigate = useNavigate();
     const [errors, setErrors] = useState({});
-    const [button, setButton] = useState(true)
-    const [input, setInput] = useState({  //input es mi estado local
+    const [button, setButton] = useState(true);
+    const [input, setInput] = useState({
         title: "",
         summary: "",
         spoonacularScore: "",
@@ -18,46 +18,59 @@ export default function RecipeCreate() {
         analyzedInstructions: "",
         image: "",
         diets: []
-    })
+    });
 
     useEffect(() => {
         dispatch(getDiets())
-    }, [dispatch])
+    }, [dispatch]);
 
     useEffect(() => {
         if (input.title.length > 0) setButton(false)
         else setButton(true)
-    }, [input, setButton])
+    }, [input, setButton]);
+
 
     function handleChange(e) {
-        setInput({    //a mi estado input 
-            ...input,   //ademas de lo que tiene 
-            [e.target.name]: e.target.value   //agregale el target value de lo que este modificando, por ej name='height_min' modifica ese value, el name lo tienen todos los inputs
-        })
+        setInput({
+            ...input,
+            [e.target.name]: e.target.value
+        });
         setErrors(
             validate({
                 ...input,
                 [e.target.name]: e.target.value,
             })
         );
-    }
 
-    function handleCheck(e) {
-        if (e.target.checked) {
+    };
+
+    function handleSelect(e) {
+        if (e.target.value !== "Select diets" && !input.diets.includes(e.target.value)) {
             setInput({
                 ...input,
-                diets: [...input.diets, e.target.value] //traeme lo que ya habia y con catenale el target value
-            })
+                diets: [...input.diets, e.target.value]
+            });
         }
+    };
 
+    function handleDeleteDiets(e) {
+        setInput({
+            ...input,
+            diets: input.diets.filter(diets => diets !== e
+            ),
+        });
     }
 
     function validate(input) {
         const imgValidate = /(https?:\/\/.*\.(?:png|jpg))/;
-        let errors = {}
+        let testTitle = /^[A-Z][a-z][^$()!¡@#/=¿{}?*%&|<>#]*$/;
+        let errors = {};
 
         if (!input.title) {
-            errors.title = 'Name is required'
+            errors.title = 'Title is required'
+        }
+        else if(!testTitle.test(input.title)){
+            errors.title = 'Start the title with capital letter. Only characters "":.,_- are accepted'
         }
         else if (!input.spoonacularScore) {
             errors.spoonacularScore = 'Score is required'
@@ -92,12 +105,12 @@ export default function RecipeCreate() {
     function handleSubmit(e) {
         if (errors.title || errors.summary || errors.spoonacularScore || errors.healthScore || errors.analyzedInstructions || errors.image) {
             e.preventDefault();
-            alert("Debe ingresar el titulo y el resumen como minimo")
+            alert('Please fill all fields');
         } else {
             e.preventDefault();
-            dispatch(postRecipe(input))
-            dispatch(getRecipes())
-            alert('Recipe Created')
+            dispatch(postRecipe(input));
+            dispatch(getRecipes());
+            alert('Recipe Created');
             setInput({
                 title: "",
                 summary: "",
@@ -106,82 +119,83 @@ export default function RecipeCreate() {
                 analyzedInstructions: "",
                 image: "",
                 diets: []
-            })
+            });
             navigate("/home");
-
         }
     }
 
-
     return (
-        <div>
+        <>
             <div className={s.btnContainerC}>
                 <Link to='/home'>
                     <button className={s.btnHomeC}>⬅ TO BACK HOME</button>
                 </Link>
             </div>
             <div className={s.titleForm}>
-                <h1>Crea tu receta</h1>
+                <h1>Create your recipe</h1>
             </div>
             <div className={s.container}>
 
                 <form onSubmit={(e) => handleSubmit(e)}>
                     <div className={s.form}>
+                        <div className={s.required}>
+                            <p>(<span>*</span>)required</p>
+                        </div>
                         <div >
-                            <h4>Nombre: </h4>
-                            <input type="text" value={input.title} name="title" onChange={(e) => handleChange(e)} />
-                            {errors.title && (<p>{errors.title}</p>)}
-                        </div>
-
-                        <div>
-                            <h4>Score: </h4>
-                            <input type="number" value={input.spoonacularScore} name="spoonacularScore" placeholder=" " onChange={(e) => handleChange(e)} />
-                            {errors.spoonacularScore && (<p>{errors.spoonacularScore}</p>)}
+                            <h4>Title: <span>*</span></h4>
+                            <input type="text" value={input.title} name="title" placeholder='title your recipe...' onChange={(e) => handleChange(e)} />
+                            {errors.title && (<p className={s.errors}>{errors.title}</p>)}
                         </div>
                         <div>
-                            <h4>Health Score: </h4>
-                            <input type="number" value={input.healthScore} name="healthScore" placeholder=" " onChange={(e) => handleChange(e)} />
-                            {errors.healthScore && (<p>{errors.healthScore}</p>)}
+                            <h4>Score: <span>*</span></h4>
+                            <input type="number" value={input.spoonacularScore} name="spoonacularScore" placeholder="score..." onChange={(e) => handleChange(e)} />
+                            {errors.spoonacularScore && (<p className={s.errors}>{errors.spoonacularScore}</p>)}
                         </div>
                         <div>
-                            <h4>Image: </h4>
-                            <input type="text" value={input.image} name="image" onChange={(e) => handleChange(e)} />
-                            {errors.image && (<p>{errors.image}</p>)}
+                            <h4>Health Score: <span>*</span></h4>
+                            <input type="number" value={input.healthScore} name="healthScore" placeholder="health score..." onChange={(e) => handleChange(e)} />
+                            {errors.healthScore && (<p className={s.errors}>{errors.healthScore}</p>)}
                         </div>
                         <div>
-                            <h4> Analyzed Instructions: </h4>
-                            <textarea type="textera" value={input.analyzedInstructions} name="analyzedInstructions" placeholder=" " rows="5" cols="40" onChange={(e) => handleChange(e)} />
-                            {errors.analyzedInstructions && (<p>{errors.analyzedInstructions}</p>)}
+                            <h4>Image: <span>*</span></h4>
+                            <input type="text" value={input.image} name="image" placeholder='image type url...' onChange={(e) => handleChange(e)} />
+                            {errors.image && (<p className={s.errors}>{errors.image}</p>)}
                         </div>
                         <div>
-                            <h4>Summary: </h4>
-                            <textarea type="text" value={input.summary} name="summary" placeholder=" " rows="5" cols="40" onChange={(e) => handleChange(e)} />
-                            {errors.summary && (<p>{errors.summary}</p>)}
-
+                            <h4> Analyzed Instructions: <span>*</span></h4>
+                            <textarea type="textera" value={input.analyzedInstructions} name="analyzedInstructions" placeholder="recipe instructions..." rows="5" cols="40" onChange={(e) => handleChange(e)} />
+                            {errors.analyzedInstructions && (<p className={s.errors}>{errors.analyzedInstructions}</p>)}
                         </div>
-                    </div>
-                    <div className={s.check}>
-                        <h4>Diets: </h4>
-                        <div className={s.checkbox}>
-
-                            <p><input type='checkbox' value='gluten free' name='gluten free' onChange={(e) => handleCheck(e)} />gluten free</p>
-                            <p><input type='checkbox' value='dairy free' name='dairy free' onChange={(e) => handleCheck(e)} />dairy free</p>
-                            <p><input type='checkbox' value='lacto ovo vegetarian' name='lacto ovo vegetarian' onChange={(e) => handleCheck(e)} />Lacto ovo vegetarian</p>
-                            <p><input type='checkbox' value='vegan' name='vegan' onChange={(e) => handleCheck(e)} />vegan</p>
-                            <p><input type='checkbox' value='paleolithic' name='paleolithic' onChange={(e) => handleCheck(e)} />paleolithic</p>
-                            <p><input type='checkbox' value='primal' name='primal' onChange={(e) => handleCheck(e)} />primal</p>
-                            <p><input type='checkbox' value='pescatarian' name='pescatarian' onChange={(e) => handleCheck(e)} />pescatarian</p>
-                            <p><input type='checkbox' value='fodmap friendly' name='fodmap friendly' onChange={(e) => handleCheck(e)} />fodmap friendly</p>
-                            <p><input type='checkbox' value='whole 30' name='whole 30' onChange={(e) => handleCheck(e)} />whole 30</p>
-
+                        <div>
+                            <h4>Summary: <span>*</span></h4>
+                            <textarea type="text" value={input.summary} name="summary" placeholder="dish summary.." rows="5" cols="40" onChange={(e) => handleChange(e)} />
+                            {errors.summary && (<p className={s.errors}>{errors.summary}</p>)}
+                        </div>
+                        <div className={s.diets}>
+                            <h4>Diets: </h4>
+                            <select onChange={(e) => handleSelect(e)} >
+                                <option>Select diets</option>
+                                {diets.map((el) => (
+                                    <option key={el.name} value={el.name}>{el.name}</option>
+                                ))}
+                            </select>
                         </div>
                     </div>
                     <div className={s.btnContainerCreate}>
-                        <button  className={s.btnHomeCreate} disabled={button} >CREATE RECIPE</button>
+                        <button className={s.btnCreate} disabled={button} >CREATE RECIPE</button>
                     </div>
                 </form>
+                <div className={s.delete}>{input.diets.map(el => {
+                    return (
+                        <div className={s.opDelete}>
+                            <p>{el}</p>
+                            <button className={s.btnDelete} onClick={() => handleDeleteDiets(el)}>X</button>
+                        </div>
+                    )
+                })}
+                </div>
             </div>
 
-        </div>
+        </>
     )
 }

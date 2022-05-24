@@ -1,0 +1,17 @@
+.notFound{
+    background: black;
+}
+.btnH {
+    background: rgb(247, 66, 102);
+    color: white;
+    height: 40px;
+    width: 160px;
+    margin-top: 10px;
+    border-color: rgb(247, 66, 102);
+    border-radius: 10px;
+}
+
+.btnH:hover {
+    background: rgb(138, 95, 104);
+    border-color: rgb(138, 95, 104);
+}

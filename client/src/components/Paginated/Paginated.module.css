@@ -11,12 +11,13 @@ ul {
 li {
   float: left;
 }
+
 button{
   cursor: pointer;
-
 }
+
 .btnPag{
-  background-color: rgba(51,49,50,0.8);
+  background: rgba(51,49,50,0.8);
   color: white;
   border-radius: 7px;
   width: 40px;
@@ -27,8 +28,7 @@ button{
    background: black;
 }
 
-.btnPag:focus{
-  
+.btnPag:focus{  
     background-color:rgb(247, 66, 102);
     color: white;
 }

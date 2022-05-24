@@ -4,41 +4,29 @@ import {useDispatch} from "react-redux";
 import {getRecipesName} from "../../redux/actions";
 import s from './SearchBar.module.css';
 
-
 export default function SearchBar({setCurrentPage}){
     const dispatch = useDispatch();
     const [name, setName] = useState("");
-    const [error, setError] = useState('')
-
-
+    const [error, setError] = useState('');
     const validate = (value) => {
         let error='';
-        let testSpace = /^\S+/;
-        let testNum = /^[0-9]+$/
-        if(!testSpace.test(value)){
-            error = 'No se permiten espacios en blanco al inicio para realizar la búsqueda';
-        } else if(testNum.test(value))
-        {
-            error= 'No se permiten numeros'
-        } else if(!value){
-            error='nombre no existe'
-        }
+        let testLetter = /^[a-zA-Z][^$()@!¡""#/=¿{},.?*-_%&|<>#]*$/;      // /([A-Z])\w+[a-z]/;
+        if(!testLetter.test(value)){
+            error= 'Only letters are accepted for the search'
+        } 
         return error;
-    
-    }
-    
+    };
 
     function handleInputChange(e){
-        e.preventDefault()
-        setName(e.target.value)
-        setError(validate(e.target.value))
-
-    }
+        e.preventDefault();
+        setName(e.target.value);
+        setError(validate(e.target.value));
+    };
 
     function handleSubmit(e){
         e.preventDefault()
         if (!name) {
-            alert('Intenta introduciendo un nombre de un país')
+            alert('Please try putting a valid recipe')
         } else if(!error){
             dispatch(getRecipesName(name));
         } else {
@@ -46,9 +34,7 @@ export default function SearchBar({setCurrentPage}){
         }
         setName('');
         setCurrentPage(1);
-    
     } 
-
 
     return(
         <div className={s.search}>
