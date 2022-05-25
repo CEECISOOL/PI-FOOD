@@ -3,13 +3,13 @@ const axios = require('axios');
 const { Recipe, Diet } = require('../db');
 const { API_KEY } = process.env;
 const router = Router();
-const infoTotal = require('../../info.json');
+//const infoTotal = require('../../info.json');
 
 
 const getAllRecipes = async () => {
-    const apiUrl = infoTotal
-    //const apiUrl = await axios.get(`https://api.spoonacular.com/recipes/complexSearch?number=100&addRecipeInformation=true&diet&apiKey=${API_KEY}`);
-    const apiInfo = await apiUrl.results.map(el => {  //le saque el data.results
+    //const apiUrl = infoTotal
+    const apiUrl = await axios.get(`https://api.spoonacular.com/recipes/complexSearch?number=100&addRecipeInformation=true&diet&apiKey=${API_KEY}`);
+    const apiInfo = await apiUrl.data.results.map(el => {  //le saque el data.results
         return {
             id: el.id,
             title: el.title,
