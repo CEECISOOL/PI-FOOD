@@ -1,11 +1,16 @@
-.container{
-padding-left: 15%;
-   margin-top: 10%;
+.container {
+  padding-left: 15%;
+
 }
 
 @keyframes ldio_p4u3wgqmuk {
-  0% { opacity: 1 }
-  100% { opacity: 0 }
+  0% {
+    opacity: 1
+  }
+
+  100% {
+    opacity: 0
+  }
 }
 
 .ldio_p4u3wgqmuk div {
@@ -15,8 +20,8 @@ padding-left: 15%;
   animation: ldio_p4u3wgqmuk linear 1s infinite;
   background: #f74266;
   width: 25px;
-  height: 35px;
-  border-radius: 100px / 100px;
+  height: 50px;
+  border-radius: 15px / 30px;
   transform-origin: 6px 100px;
 }
 
@@ -105,8 +110,10 @@ padding-left: 15%;
   position: relative;
   transform: translateZ(0) scale(1);
   backface-visibility: hidden;
-  transform-origin: 0 0; /* see note above */
+  transform-origin: 0 0;
+  /* see note above */
 }
 
-.ldio_p4u3wgqmuk div { box-sizing: content-box; }
-
+.ldio_p4u3wgqmuk div {
+  box-sizing: content-box;
+}

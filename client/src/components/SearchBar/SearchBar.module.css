@@ -1,5 +1,5 @@
-.search button{
-    background: rgb(247, 66, 102) ;
+.search button {
+    background: rgb(247, 66, 102);
     border-color: rgb(247, 66, 102);
     color: white;
     border-radius: 10px;
@@ -7,13 +7,12 @@
     height: 25px;
 }
 
-.search button:hover{
+.search button:hover {
     background: rgb(138, 95, 104);
     border-color: rgb(138, 95, 104);
-
 }
 
-.search input{
+.search input {
     border-radius: 10px;
     width: 200px;
     height: 20px;

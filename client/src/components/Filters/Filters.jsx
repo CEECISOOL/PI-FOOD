@@ -1,17 +1,6 @@
 import React from 'react';
-import { filterDiets } from '../../redux/actions';
-import { useDispatch, useSelector } from 'react-redux';
 
-export default function Filters({ setCurrentPage, handleSort, handleOrderScore }) {
-    const allDiets = useSelector((state) => state.diets);
-    const dispatch = useDispatch()
-
-    const handleFilterDiets = (e) => {
-        e.preventDefault();
-        dispatch(filterDiets(e.target.value))
-        setCurrentPage(1);
-    }
-
+export default function Filters({ allDiets, handleSort, handleOrderScore, handleFilterDiets }) {
 
     return (
         <>
@@ -36,7 +25,7 @@ export default function Filters({ setCurrentPage, handleSort, handleOrderScore }
                 <select onChange={e => handleFilterDiets(e)}>
                     <option value="all">All diets</option>
                     {allDiets.map(e => (
-                        <option key={e.name} value={e.name}>{e.name}</option>
+                        <option key={e} value={e}>{e}</option>
                     ))}
                 </select>
             </div>

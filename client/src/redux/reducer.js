@@ -35,46 +35,46 @@ function rootReducer(state = initialState, action) {
                 detail: {},
                 videogames: [],
             };
-            case 'ALPHEBETICAL_ORDER':
-                let arrNew = action.payload === 'A-Z' ?   //si es A-Z entonces accede a mi estado dogs y hacele un sort(compara dos valores), dentro del if esta el valor que necesitamos ordenar y lo que hace es ir poniendo antes(-1) y despues(1) del arreglo, y si son iguales los deja igual con el 0. Es decir, que si el payload es A-Z me ejecuta el sort y los ordena de A-Z
-                    state.recipes.sort(function (a, b) {
-                        if (a.title > b.title) {  //si a es mas grande que que b devolveme 1
-                            return 1;
-                        }
-                        if (b.title > a.title) {
-                            return -1;   //si b es mas grande que a devolveme -1
-                        }
-                        return 0   //sino devolveme 0
-                    }) :  //si es Z-A 
-                    state.recipes.sort(function (a, b) {
-                        if (a.title > b.title) {  //si a es mas grande que b devolveme -1
-                            return -1;
-                        }
-                        if (b.title > a.title) { //si b es mas grande que a devolveme 1
-                            return 1;
-                        }
-                        return 0  //sino devolveme 0
-                    })
-                return {
-                    ...state,
-                    recipes: arrNew
-                };
+        case 'ALPHEBETICAL_ORDER':
+            let arrNew = action.payload === 'A-Z' ?
+                state.recipes.sort(function (a, b) {
+                    if (a.title > b.title) {
+                        return 1;
+                    }
+                    if (b.title > a.title) {
+                        return -1;
+                    }
+                    return 0
+                }) :  //si es Z-A 
+                state.recipes.sort(function (a, b) {
+                    if (a.title > b.title) {
+                        return -1;
+                    }
+                    if (b.title > a.title) {
+                        return 1;
+                    }
+                    return 0
+                })
+            return {
+                ...state,
+                recipes: arrNew
+            };
         case 'ORDER_SCORE':
             let orderScore = action.payload === 'min_score'
                 ? state.recipes.sort(function (a, b) {
-                    if (a.spoonacularScore > b.spoonacularScore) {
+                    if (a.healthScore > b.healthScore) {
                         return 1;
                     }
-                    if (b.spoonacularScore > a.spoonacularScore) {
+                    if (b.healthScore > a.healthScore) {
                         return -1;
                     }
                     return 0;
                 })
                 : state.recipes.sort(function (a, b) {
-                    if (a.spoonacularScore > b.spoonacularScore) {
+                    if (a.healthScore > b.healthScore) {
                         return -1;
                     }
-                    if (b.spoonacularScore > a.spoonacularScore) {
+                    if (b.healthScore > a.healthScore) {
                         return 1;
                     }
                     return 0;

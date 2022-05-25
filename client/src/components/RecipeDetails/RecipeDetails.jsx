@@ -12,7 +12,7 @@ export default function RecipeDetails() {
 
     useEffect(() => {
         dispatch(getDetails(id));
-        dispatch(cleanData());
+        return dispatch(cleanData());
     }, [dispatch, id]);
 
     function createSummary() {
@@ -37,10 +37,10 @@ export default function RecipeDetails() {
                         </div>
                         <div className={s.sectionTwo}>
                             <div className={s.score}>
-                                <h3>Score: {myRecipe.spoonacularScore? myRecipe.spoonacularScore : 'score not found'}</h3>
+                                <h3>Score: {myRecipe.spoonacularScore ? myRecipe.spoonacularScore : 'score not found'}</h3>
                             </div>
                             <div className={s.healthScore}>
-                                <h3>Health Score: {myRecipe.healthScore? myRecipe.healthScore : 'health score not found'}</h3>
+                                <h3>Health Score: {myRecipe.healthScore ? myRecipe.healthScore : 'health score not found'}</h3>
                             </div>
                             <div className={s.diets}>
                                 <h3>Diets: </h3>
@@ -63,17 +63,17 @@ export default function RecipeDetails() {
                     <div className={s.instructions}>
                         <div className={s.sangriaTwo}>
                             <h3>Instructions:</h3>
-                            <p>{myRecipe.analyzedInstructions.length !== 0 ? 
-                            (typeof myRecipe.analyzedInstructions === 'string' ? myRecipe.analyzedInstructions : myRecipe.analyzedInstructions.map(e =>
-                                e.map(e =>
-                                    e.number && e.step ? 'STEP ' + e.number + ': ' + e.step : myRecipe.analyzedInstructions
-                                ))) : 'not instruccions'}</p>
+                            <p>{myRecipe.analyzedInstructions.length !== 0 ?
+                                (typeof myRecipe.analyzedInstructions === 'string' ? myRecipe.analyzedInstructions : myRecipe.analyzedInstructions.map(e =>
+                                    e.map(e =>
+                                        e.number && e.step ? 'STEP ' + e.number + ': ' + e.step : myRecipe.analyzedInstructions
+                                    ))) : 'Not found instruccions'}</p>
                         </div>
                     </div>
-                </div> 
-                ) : (
-                    <Loading/>
-                )
+                </div>
+            ) : (
+                <Loading />
+            )
             }
         </>
     )

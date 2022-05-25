@@ -4,8 +4,9 @@ import s from './Paginated.module.css';
 export default function Paginated({ recipesPerPage, recipes, paginated }) {
     const pageNumber = [];
 
+
     for (let i = 0; i < Math.ceil(recipes / recipesPerPage); i++) {
-        pageNumber.push(i+1)
+        pageNumber.push(i + 1)
     };
 
     return (

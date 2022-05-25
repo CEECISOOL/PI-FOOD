@@ -37,16 +37,17 @@
     justify-content: center;
 }
 
-.diets select{
+.diets select {
     width: 200px;
     height: 40px;
     border-radius: 10px;
 }
-.form span{
+
+.form span {
     color: #f21f1f;
 }
 
-.required{
+.required {
     color: white;
     font-size: 12px;
 }
@@ -84,31 +85,33 @@
     border-color: rgb(138, 95, 104);
 }
 
-.errors{
+.errors {
     color: #f21f1f;
     font-size: 12px;
 }
 
-.delete{
-        display: grid;
-        margin-top: 50px;
-        border-radius: 25px;
-        grid-template-columns: repeat(5, 1fr);
-        justify-content: center;
-        grid-auto-rows: minmax(50px, auto);
-        background-color: rgba(51, 49, 50, 0.8);
+.delete {
+    display: grid;
+    margin-top: 50px;
+    border-radius: 25px;
+    grid-template-columns: repeat(5, 1fr);
+    justify-content: center;
+    grid-auto-rows: minmax(50px, auto);
+    background-color: rgba(51, 49, 50, 0.8);
 
 }
-.opDelete{
+
+.opDelete {
     color: white
 }
 
-.btnDelete{
+.btnDelete {
     border-radius: 3px;
     color: white;
     background: black;
 }
-.btnDelete:hover{
+
+.btnDelete:hover {
     background: rgb(18, 18, 18);
     border-color: rgb(18, 18, 18);
 

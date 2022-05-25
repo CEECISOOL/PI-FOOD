@@ -69,7 +69,7 @@ export default function RecipeCreate() {
         if (!input.title) {
             errors.title = 'Title is required'
         }
-        else if(!testTitle.test(input.title)){
+        else if (!testTitle.test(input.title)) {
             errors.title = 'Start the title with capital letter. Only characters "":.,_- are accepted'
         }
         else if (!input.spoonacularScore) {
@@ -176,7 +176,7 @@ export default function RecipeCreate() {
                             <select onChange={(e) => handleSelect(e)} >
                                 <option>Select diets</option>
                                 {diets.map((el) => (
-                                    <option key={el.name} value={el.name}>{el.name}</option>
+                                    <option key={el} value={el}>{el}</option>
                                 ))}
                             </select>
                         </div>

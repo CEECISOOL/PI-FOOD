@@ -1,4 +1,4 @@
-.paginated{
+.paginated {
   display: flex;
   justify-content: row;
   justify-content: center;
@@ -7,17 +7,17 @@
 ul {
   list-style-type: none;
 }
-  
+
 li {
   float: left;
 }
 
-button{
+button {
   cursor: pointer;
 }
 
-.btnPag{
-  background: rgba(51,49,50,0.8);
+.btnPag {
+  background: rgba(51, 49, 50, 0.8);
   color: white;
   border-radius: 7px;
   width: 40px;
@@ -25,10 +25,10 @@ button{
 }
 
 .btnPag:hover {
-   background: black;
+  background: black;
 }
 
-.btnPag:focus{  
-    background-color:rgb(247, 66, 102);
-    color: white;
+.btnPag:focus {
+  background-color: rgb(247, 66, 102);
+  color: white;
 }
