@@ -1,3 +1,27 @@
+@media screen and (max-width: 480px) {
+    .navBar {
+        height: 150px;
+        width: 900px;
+    }
+    .filters{
+        height: 150px;
+        width: 900px;
+    }
+    .paginated{
+        height: 150px;
+        width: 950px;
+    }
+    .cards{
+        display:grid inline-grid;
+        grid-template-rows: 1fr;
+
+    }
+    .error{
+        padding-left: 100%;
+    }
+
+}
+
 .navBar {
     margin: 20px 50px;
     border-radius: 25px;
@@ -80,7 +104,6 @@ option {
     border-radius: 50px;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    grid-auto-rows: minmax(50px, auto);
 }
 
 .error {

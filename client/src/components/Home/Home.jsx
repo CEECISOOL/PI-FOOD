@@ -95,7 +95,7 @@ export default function Home() {
                         </button>
                     </div>
                 </div>
-                <div>
+                <div className={s.paginated}>
                     <Paginated
                         recipesPerPage={recipesPerPage}
                         recipes={recipes.length}
@@ -109,7 +109,7 @@ export default function Home() {
                                 {
                                     currentRecipes?.map((el) => {
                                         return (
-                                            <div key={el.id}
+                                            <div className={s.card} key={el.id}
                                             >
                                                 <Cards
                                                     id={el.id}
