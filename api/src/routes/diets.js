@@ -10,7 +10,7 @@ router.get("/", async (req, res) => {
     let dietArr = [];
     const dietsApi = infoTotal
     //const dietsApi = await axios.get(`https://api.spoonacular.com/recipes/complexSearch?number=5222&addRecipeInformation=true&diet&apiKey=${API_KEY}`);
-    dietsApi.data.results.map(e => {
+    dietsApi.results.map(e => {
         e.diets.forEach(el => {
             if (!dietArr.includes(el)) {
                 dietArr = dietArr.concat(el)
