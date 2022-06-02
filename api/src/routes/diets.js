@@ -18,7 +18,7 @@ router.get("/", async (req, res) => {
         })
     });
 
-    let dietDb = await Diet.findAll({
+   /* let dietDb = await Diet.findAll({
         attributes: ['name']
     });
 
@@ -34,6 +34,7 @@ router.get("/", async (req, res) => {
         })
     })
 
+    */
 
     return res.send(dietArr);
 })
