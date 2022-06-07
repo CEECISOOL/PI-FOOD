@@ -1,8 +1,6 @@
 const { DataTypes } = require('sequelize');
 
-
 module.exports = (sequelize) => {
-  // defino el modelo
   sequelize.define('recipe', {
     id: {
       type: DataTypes.UUID,
@@ -29,11 +27,6 @@ module.exports = (sequelize) => {
     },
     image: {
       type: DataTypes.TEXT,
-    },
-    createdInDb: {
-      type: DataTypes.BOOLEAN,
-      allowNull: false,
-      defaultValue: true,
     }
   });
 };

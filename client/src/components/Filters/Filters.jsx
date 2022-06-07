@@ -1,6 +1,5 @@
 import React from 'react';
 
-
 export default function Filters({ allDiets, handleSort, handleOrderScore, handleFilterDiets }) {
 
     return (

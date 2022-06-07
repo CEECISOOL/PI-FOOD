@@ -39,9 +39,6 @@ export default function Home() {
     }, [dispatch])
 
     function handleClick() {
-        //e.preventDefault()
-        //dispatch(getRecipes());
-        //setCurrentPage(1);
         window.location.reload()
     }
 
